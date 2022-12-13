@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <!--开发版本-->
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.4.1/css/bootstrap.css">
+    <!--生产版本-->
+    <!--<link rel="stylesheet" href="static/plugins/bootstrap-3.4.1/css/bootstrap.min.css">-->
+    <style>
+        .login{
+            height: 715px;
+            width: 450px;
+            border: 1px solid grey;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 100px;
+            padding-top: 60px;
+            padding-bottom: 60px;
+            padding-left: 40px;
+            padding-right: 40px;
+            box-shadow: 5px 5px 20px #aaa;
+            border-radius: 10px 10px 10px 10px;
+            background-color: white;
+        }
+        .login h4{
+            text-align: center;  
+            margin-bottom: 40px;
+        }
+        .login .img img{
+            margin-left: 124px;
+            margin-bottom: 10px;
+            height: 120px;
+            width: 120px;
+        }
+        .login .text{
+            margin-bottom: 40px;
+        }
+        .login .text span{
+            margin-left: 160px;
+            font-size: 18px;
+        }
+        .btn{
+            margin-left: 84px;
+            height:40px;
+            width:200px;
+        }
+        .form-control{
+            text-align: center;
+            height:45px;
+            margin-bottom: 40px;
+        }
+        .login .change{
+            margin-top: 70px;
+        }
+        .login .change span{
+            margin-left: 135px;
+            font-size: 18px;
+            color: #56baed;
+            text-align: center;
+        }
+    </style>
+</head>
+<body style="background-color:#56baed ;">
+    <div class="login">
+        <h4>欢迎登录四川大学成绩管理系统</h4>
+        <div class="img">
+            <!--<img src="static/img/student.jpg" alt="">-->
+            <img src="/static/img/teacher.jpg" alt="">
+        </div>
+        <div class="text">
+            <!--<span>学生端</span>-->
+            <span>教师端</span>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <input type="text" class="form-control" id="exampleInputEmail1" placeholder="教工号" name="user"> 
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="密码" name="pswd">
+            </div>
+            <button type="submit" class="btn btn-info">登录</button>
+            <div><font color="red">{{errormsg}}</font></div>
+        </form>
+        <div class="change">
+            <a href="/loginstudent.html">
+                <span>进入学生端</span>
+            </a>
+            <a href="/login.html">
+                <span>返回</span>
+            </a>
+            <!--<span>教师端</span>-->
+        </div>
+    </div>
+</body>
+</html>

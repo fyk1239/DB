@@ -1,0 +1,171 @@
+[
+    {
+        "model": "app01.Student",
+        "pk": 1,
+        "fields": 
+        {
+            "Sno": "00001",
+            "Spasswd": "123",
+            "Sname": "张三",
+            "Sdept": "计算机科学与技术",
+            "Stot_credit": 20,
+            "Scredit": 0,
+            "Savg": 0
+        }
+    },
+    {
+        "model": "app01.Student",
+        "pk": 2,
+        "fields": 
+        {
+            "Sno": "00002",
+            "Spasswd": "123",
+            "Sname": "李四",
+            "Sdept": "计算机科学与技术",
+            "Stot_credit": 20,
+            "Scredit": 0,
+            "Savg": 0
+        }
+    },
+    {
+        "model": "app01.Student",
+        "pk": 3,
+        "fields": 
+        {
+            "Sno": "00003",
+            "Spasswd": "123",
+            "Sname": "王五",
+            "Sdept": "计算机科学与技术",
+            "Stot_credit": 20,
+            "Scredit": 0,
+            "Savg": 0
+        }
+    },
+    {
+        "model": "app01.Teacher",
+        "pk": 1,
+        "fields": 
+        {
+            "Tno": "10001",
+            "Tname": "郭老师",
+            "Tdept": "计算机学院"
+        }
+    },
+    {
+        "model": "app01.Teacher",
+        "pk": 2,
+        "fields": 
+        {
+            "Tno": "10002",
+            "Tname": "张老师",
+            "Tdept": "计算机学院"
+        }
+    },
+    {
+        "model": "app01.Course",
+        "pk": 1,
+        "fields": 
+        {
+            "Cno": "20001",
+            "Cname": "计算机网络",
+            "Ccredit": 4,
+            "Tno": "10001"
+        }
+    },
+    {
+        "model": "app01.Course",
+        "pk": 2,
+        "fields": 
+        {
+            "Cno": "20002",
+            "Cname": "计算机组成原理",
+            "Ccredit": 3,
+            "Tno": "10002"
+        }
+    },
+    {
+        "model": "app01.Grade",
+        "pk": 1,
+        "fields": 
+        {
+            "Gno": "30001",
+            "Sno": "00001",
+            "Cno": "20001"
+        }
+    },
+    {
+        "model": "app01.Grade",
+        "pk": 2,
+        "fields": 
+        {
+            "Gno": "30002",
+            "Sno": "00001",
+            "Cno": "20002",
+            "Gscore": 90
+        }
+    },
+    {
+        "model": "app01.Grade",
+        "pk": 3,
+        "fields": 
+        {
+            "Gno": "30003",
+            "Sno": "00002",
+            "Cno": "20001",
+            "Gscore": 95
+        }
+    },
+    {
+        "model": "app01.Grade",
+        "pk": 4,
+        "fields": 
+        {
+            "Gno": "30004",
+            "Sno": "00002",
+            "Cno": "20002",
+            "Gscore": 95
+        }
+    },
+    {
+        "model": "app01.Grade",
+        "pk": 5,
+        "fields": 
+        {
+            "Gno": "30005",
+            "Sno": "00003",
+            "Cno": "20001",
+            "Gscore": 85
+        }
+    },
+    {
+        "model": "app01.Grade",
+        "pk": 6,
+        "fields": 
+        {
+            "Gno": "30006",
+            "Sno": "00003",
+            "Cno": "20002",
+            "Gscore": 85
+        }
+    },
+    {
+        "model": "app01.Announcement",
+        "pk": 1,
+        "fields": 
+        {
+            "Ano": "40001",
+            "Acontent": "数据库系统原理课程公告: 本课程平时成绩占40%，半期成绩占10%，期末成绩占50%。",
+            "Cno": "20001"
+        }
+    },
+    {
+        "model": "app01.Announcement",
+        "pk": 2,
+        "fields": 
+        {
+            "Ano": "40002",
+            "Acontent": "计算机网络课程公告: 请大家准时上课。",
+            "Cno": "20002"
+        }
+    }
+]
