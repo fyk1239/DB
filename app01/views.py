@@ -22,12 +22,14 @@ def loginstudent(request):
     elif request.method == "POST":
         user = request.POST.get('user')
         pswd = request.POST.get('pswd')
-        # 未实现与数据库内密码判定
-        if user == "admin" and pswd == "123":
-            return redirect('/student.html')
-        else:
-            errormsg = "用户名或密码错误!"
-            return render(request, 'loginstudent.html', {"errormsg": errormsg})
+        # 实现与数据库内密码判定
+        students = Student.objects.all()
+        for student in students:
+            if student.Sno == user and student.Spasswd == pswd:
+                return redirect('/student.html')
+            elif student.Sno == user and student.Spasswd != pswd:
+                return render(request, 'loginstudent.html', {'msg': '密码错误'})
+        return render(request, 'loginstudent.html', {'msg': '用户名错误'})
 
 
 def loginteacher(request):
@@ -39,9 +41,11 @@ def loginteacher(request):
     elif request.method == "POST":
         user = request.POST.get('user')
         pswd = request.POST.get('pswd')
-        # 未实现与判定
-        if user == "admin" and pswd == "123":
-            return redirect('/teacher.html')
+        # 实现与数据库内密码判定
+        teachers = Teacher.objects.all()
+        for teacher in teachers:
+            if teacher.Tno == user and teacher.Tpasswd == pswd:
+                return redirect('/teacher.html')
         else:
             errormsg = "用户名或密码错误!"
             return render(request, 'loginteacher.html', {"errormsg": errormsg})
