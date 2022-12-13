@@ -47,6 +47,7 @@
         "fields": 
         {
             "Tno": "10001",
+            "Tpasswd": "123",
             "Tname": "郭老师",
             "Tdept": "计算机学院"
         }
@@ -57,6 +58,7 @@
         "fields": 
         {
             "Tno": "10002",
+            "Tpasswd": "123",
             "Tname": "张老师",
             "Tdept": "计算机学院"
         }

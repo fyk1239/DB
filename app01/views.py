@@ -22,6 +22,7 @@ def loginstudent(request):
     elif request.method == "POST":
         user = request.POST.get('user')
         pswd = request.POST.get('pswd')
+        # 未实现与数据库内密码判定
         if user == "admin" and pswd == "123":
             return redirect('/student.html')
         else:

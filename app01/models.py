@@ -38,6 +38,8 @@ class Teacher(models.Model):
     # 教师工号，主码，不可为空，不可重复
     Tno = models.CharField(primary_key=True, max_length=5,
                            serialize=False, unique=True, null=False, default='0')
+    # 教师密码
+    Tpasswd = models.CharField(max_length=20, default='123')
     # 教师姓名
     Tname = models.CharField(max_length=20)
     # 教师系别
