@@ -96,19 +96,15 @@ def get_course_announcement(Cursor, Cno):  # 通过课程号查找课程公告�
 
 
 # teacher
-def search_teacher_num(Cursor, Tno):  # 获取对应工号的教师的信息
+def search_teacher_num(Cursor, Tno):  # 获取对应工号的教师的信息，修改完成
     Cursor.execute(
         "select * from public.app01_teacher where \"Tno\"='"+Tno+"'")
     return Cursor.fetchone()
 
-# def update_password_for_teacher(Cursor,tno,newpassword):#修改教师密码
-#   Cursor.execute("update teacher set Tpasswd='"+newpassword+"' where tno='"+ tno+"'")
-#   return Cursor.fetchone()
 
-
-def get_teacher_app01_course(Cursor, Tno):  # 查找教师教授的课
+def get_teacher_app01_course(Cursor, Tno):  # 查找教师教授的课，修改完成
     Cursor.execute(
-        "select * from public.app01_teacher join public.app01_course on \"app01_teacher.Tno\"=\"app01_course.Tno\" where \"app01_teacher.Tno\"='"+Tno+"'")
+        "select * from public.app01_teacher join public.app01_course on app01_teacher.\"Tno\"=app01_course.\"Tno_id\" where app01_teacher.\"Tno\"='"+Tno+"'")
     return Cursor.fetchall()
 
 
@@ -127,14 +123,15 @@ def update_grade(Cursor, Sno, Cno, grade):  # 修改学生成绩，修改完成
 if __name__ == "__main__":
     conn = connect_db()  # 连接数据库
     cur = conn.cursor()  # 创建会话
-    # print(search_stu(cur, '00001'))
-    # print(get_grade(cur, '00002'))
-    # publish_announcement(cur,'20001',"测试公告")
-    # print(get_course_announcement(cur, '20001'))
-    # update_grade(cur, '00001', '20001', '99')
-    # update_stu_info(cur, '00001')
-    # print(update_stu_info(cur, '00001'))
-    # print(search_grade_from_id(cur, '00001', '20001'))
+    print(search_stu(cur, '00001'))
+    print(get_grade(cur, '00002'))
+    publish_announcement(cur,'20001',"测试公告")
+    print(get_course_announcement(cur, '20001'))
+    update_grade(cur, '00001', '20001', '99')
+    update_stu_info(cur, '00001')
+    print(update_stu_info(cur, '00001'))
+    print(search_grade_from_id(cur, '00001', '20001'))
     print(search_grade_from_name(cur, '00001', '数据库系统原理'))
     print(search_teacher_num(cur, '10001'))
+    print(get_teacher_app01_course(cur, '10002'))
     close_db_connection(conn)  # 关闭数据库连接
