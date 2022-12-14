@@ -120,18 +120,26 @@ def update_grade(Cursor, Sno, Cno, grade):  # 修改学生成绩，修改完成
                    " where \"Sno_id\"='"+Sno+"' and \"Cno_id\"='"+Cno+"'")
 
 
+def search_course(Cursor, Sno):  # 查找学生选修的课程，修改完成
+    Cursor.execute(
+        "select * from public.app01_grade where app01_grade.\"Sno_id\"='"+Sno+"'")
+    return Cursor.fetchall()
+
+
 if __name__ == "__main__":
     conn = connect_db()  # 连接数据库
     cur = conn.cursor()  # 创建会话
-    print(search_stu(cur, '00001'))
-    print(get_grade(cur, '00002'))
-    publish_announcement(cur,'20001',"测试公告")
+    # print(search_stu(cur, '00001'))
+    # print(get_grade(cur, '00002'))
+    # publish_announcement(cur,'20001',"测试公告")
     print(get_course_announcement(cur, '20001'))
-    update_grade(cur, '00001', '20001', '99')
-    update_stu_info(cur, '00001')
-    print(update_stu_info(cur, '00001'))
-    print(search_grade_from_id(cur, '00001', '20001'))
-    print(search_grade_from_name(cur, '00001', '数据库系统原理'))
-    print(search_teacher_num(cur, '10001'))
-    print(get_teacher_app01_course(cur, '10002'))
+    # update_grade(cur, '00001', '20001', '99')
+    # update_stu_info(cur, '00001')
+    # print(update_stu_info(cur, '00001'))
+    # print(search_grade_from_id(cur, '00001', '20001'))
+    # print(search_grade_from_name(cur, '00001', '数据库系统原理'))
+    # print(search_teacher_num(cur, '10001'))
+    # print(get_teacher_app01_course(cur, '10002'))
+    # print(search_course(cur, '00001')[0])
+    # print(type(search_course(cur, '00001')[0]))
     close_db_connection(conn)  # 关闭数据库连接

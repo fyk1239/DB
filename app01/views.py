@@ -1,4 +1,5 @@
 from app01.models import Student, Teacher, Course, Grade, Announcement
+import app01.functions as func
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
 from django.template import loader
@@ -53,42 +54,51 @@ def loginteacher(request):
 def student(req):
     template = loader.get_template('student.html')
     curSno = req.session.get('curSno')
-    curUser = Student.objects.get(Sno=curSno)
-    req.session['curUser'] = curUser
-    # 传递当前学生的已选课程信息，如课程号、课程名、成绩、学分、课程属性等
-    gradeList = Grade.objects.filter(Sno=curUser).all()
-    tmpCourseList = Course.objects.all()
-    courseList = {}
-    for grade in gradeList:
-        for course in tmpCourseList:
-            if grade.Cno == course.Cno:
-                courseList.append(course)
-            if grade.Cno == course.Cno and grade.Gscore >= 60:
-                curUser.Scredit += course.Ccredit
+    req.session['curSno'] = curSno
+    # 连接数据库
+    conn = func.connect_db()
+    cur = conn.cursor()
+    # 传递当前学生在数据库中的信息
+    curStudent = func.search_stu(cur, curSno)
+    curCourse = func.search_course(cur, curSno)
+    curCourseNo = []
+    for c in curCourse:
+        curCourseNo.append(c[2])
+    # 按照课程号查询课程公告内容并存入列表
+    curAnnouncement = []
+    curAnnouncementNo = []
+    curAnnouncementContent = []
+    for i in range(len(curCourseNo)):
+        tmpcourse = func.get_course_announcement(cur, curCourseNo[i])
+        curAnnouncement.append(tmpcourse)
+        # curAnnouncementNo.append(tmpcourse[0])
+        # curAnnouncementContent.append(tmpcourse[1])
     content = {
-        'curUser': curUser,
-        'gradeList': gradeList,
-        'courseList': courseList
+        'curSno': curSno,
+        'curStudentName': curStudent[2],
+        'curStudentDept': curStudent[3],
+        'curStudentTotalCredit': curStudent[4],
+        'curStudentCredit': curStudent[5],
+        'curStudentAvgScore': curStudent[6],
+        'curCourse': curCourse,
+        'curAnnouncement': curAnnouncement,
+        # 'curAnnouncementNo': curAnnouncementNo,
+        # 'curAnnouncementContent': curAnnouncementContent,
     }
+    # 关闭数据库连接
+    func.close_db_connection(conn)
     return HttpResponse(template.render(content, req))
 
 
 def studentsearch(req):
+    template = loader.get_template('studentsearch.html')
     curSno = req.session.get('curSno')
-    curUser = Student.objects.get(Sno=curSno)
-    gradeList = Grade.objects.filter(Sno=curSno).all()
-    tmpCourseList = Course.objects.all()
-    courseList = {}
-    for grade in gradeList:
-        for course in tmpCourseList:
-            if grade.Cno == course.Cno:
-                courseList.append(course)
+    # 传递当前学生在数据库中的信息，如已选课程号、课程名、成绩、学分、课程属性等
+
     content = {
-        'curUser': curUser,
-        'gradeList': gradeList,
-        'courseList': courseList
+        'curSno': curSno,
     }
-    return render(req, 'studentsearch.html', content)
+    return HttpResponse(template.render(content, req))
 
 
 def teacher(req):
