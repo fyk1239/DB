@@ -185,7 +185,7 @@
         <div class="right">
             <div class="topclick">
                 <div class="ltbox1">
-                    <p>欢迎您:user?<span class="caret"></span></p>
+                    <p>欢迎您:{{curStudentName}}<span class="caret"></span></p>
                 </div>
                     <ul class="ltbox2">
                         <li class="li1">
@@ -214,14 +214,14 @@
                </div>
                <div class="bo">
                    <div class="infobox left">
-                       <div>学分</div>
-                       <div>credits?</div>
+                       <div>总学分</div>
+                       <div>{{curStudentTotalCredit}}</div>
                    </div>   
                    <div class="infobox right">
                        <div>课程均分</div>
-                       <div>Average score of courses?</div>
+                       <div>{{curStudentAvgScore}}</div>
                    </div>
-                   <div class="clear:both"></div>
+                   <!-- <div class="clear:both"></div>
                    <div class="infobox left">
                        <div>必修学分</div>
                        <div>Required Credits?</div>
@@ -238,7 +238,7 @@
                    <div class="infobox right">
                        <div>选修课程均分</div>
                        <div>Average score of Elective course?</div>
-                   </div>
+                   </div> -->
                </div>
            </div>
            <div class="announcement">
@@ -246,20 +246,18 @@
                    公告
                </div>
                <div class="bo">
-                   <h3>
-                       1、defefdefefdefefdefefdefefdefef?
-                   </h3>
-                   <h3>
-                       2、defefdefefdefefdefefdefefdefef?
-                   </h3>
-                   <h3>
-                       3、defefdefefdefefdefefdefefdefef?
-                   </h3>
+                {% for announcement in curAnnouncement %}
+                    {% for a in announcement %}
+                    <h3>
+                        {{ a.0 }} {{ a.1 }}
+                    </h3>
+                    {% endfor %}
+                {% endfor %}
                </div>
            </div>
            <div class="clear:both"></div>
         </div>
-    
+        <!-- 等待修改 -->
         <div class="third">
             <div class="course">
                 <div class="head">

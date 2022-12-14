@@ -54,7 +54,6 @@ def loginteacher(request):
 def student(req):
     template = loader.get_template('student.html')
     curSno = req.session.get('curSno')
-    req.session['curSno'] = curSno
     # 连接数据库
     conn = func.connect_db()
     cur = conn.cursor()
@@ -66,13 +65,9 @@ def student(req):
         curCourseNo.append(c[2])
     # 按照课程号查询课程公告内容并存入列表
     curAnnouncement = []
-    curAnnouncementNo = []
-    curAnnouncementContent = []
     for i in range(len(curCourseNo)):
         tmpcourse = func.get_course_announcement(cur, curCourseNo[i])
         curAnnouncement.append(tmpcourse)
-        # curAnnouncementNo.append(tmpcourse[0])
-        # curAnnouncementContent.append(tmpcourse[1])
     content = {
         'curSno': curSno,
         'curStudentName': curStudent[2],
@@ -80,10 +75,7 @@ def student(req):
         'curStudentTotalCredit': curStudent[4],
         'curStudentCredit': curStudent[5],
         'curStudentAvgScore': curStudent[6],
-        'curCourse': curCourse,
         'curAnnouncement': curAnnouncement,
-        # 'curAnnouncementNo': curAnnouncementNo,
-        # 'curAnnouncementContent': curAnnouncementContent,
     }
     # 关闭数据库连接
     func.close_db_connection(conn)
@@ -93,11 +85,32 @@ def student(req):
 def studentsearch(req):
     template = loader.get_template('studentsearch.html')
     curSno = req.session.get('curSno')
-    # 传递当前学生在数据库中的信息，如已选课程号、课程名、成绩、学分、课程属性等
-
+    # 连接数据库
+    conn = func.connect_db()
+    cur = conn.cursor()
+    # 传递当前学生在数据库中的信息
+    curStudent = func.search_stu(cur, curSno)
+    curCourse = func.search_course(cur, curSno)
+    curCourseNo = []
+    for c in curCourse:
+        curCourseNo.append(c[2])
+    # 按照课程号查询课程公告内容并存入列表
+    curAnnouncement = []
+    for i in range(len(curCourseNo)):
+        tmpcourse = func.get_course_announcement(cur, curCourseNo[i])
+        curAnnouncement.append(tmpcourse)
+    # 根据输入的课程号查询课程信息，如课程名、学分、课程属性、课程分数、分数等级
     content = {
         'curSno': curSno,
+        'curStudentName': curStudent[2],
+        'curStudentDept': curStudent[3],
+        'curStudentTotalCredit': curStudent[4],
+        'curStudentCredit': curStudent[5],
+        'curStudentAvgScore': curStudent[6],
+        'curAnnouncement': curAnnouncement,
     }
+    # 关闭数据库连接
+    func.close_db_connection(conn)
     return HttpResponse(template.render(content, req))
 
 

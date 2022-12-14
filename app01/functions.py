@@ -73,7 +73,7 @@ def update_stu_info(Cursor, Sno):  # 更新学生学分及平均成绩，修改�
 
 
 def search_grade_from_id(Cursor, Sno, Cno):  # 通过课程号查找某学生的成绩，修改完成
-    Cursor.execute("select public.app01_grade.\"Cno_id\", public.app01_grade.\"Gscore\" from public.app01_student join public.app01_grade on app01_student.\"Sno\"=app01_grade.\"Sno_id\" where app01_student.\"Sno\"='" +
+    Cursor.execute("select public.app01_grade.\"Cno_id\", public.app01_grade.\"Gscore\", public.app01_grade.\"Glevel\" from public.app01_student join public.app01_grade on app01_student.\"Sno\"=app01_grade.\"Sno_id\" where app01_student.\"Sno\"='" +
                    Sno+"' and \"Cno_id\" like'%"+Cno+"%'")
     return Cursor.fetchall()
     #Cursor.execute("select * from app01_student natrual join grade where Sno='"+Sno+"' and Cno like '%"+Cno+"%'")
@@ -115,9 +115,19 @@ def publish_announcement(Cursor, Cno, announcement_content):  # 添加课程公�
                    str(Ano)+"','"+announcement_content+"','"+Cno+"')")
 
 
-def update_grade(Cursor, Sno, Cno, grade):  # 修改学生成绩，修改完成
-    Cursor.execute("update public.app01_grade set \"Gscore\"="+grade +
-                   " where \"Sno_id\"='"+Sno+"' and \"Cno_id\"='"+Cno+"'")
+def update_grade(Cursor, Sno, Cno, Gscore):  # 修改学生成绩，修改完成
+    if int(Gscore) >= 90:
+        Glevel = 'A'
+    elif int(Gscore) >= 80:
+        Glevel = 'B'
+    elif int(Gscore) >= 70:
+        Glevel = 'C'
+    elif int(Gscore) >= 60:
+        Glevel = 'D'
+    else:
+        Glevel = 'E'
+    Cursor.execute("update public.app01_grade set \"Gscore\"="+Gscore+", \"Glevel\"='"+Glevel +
+                   "' where \"Sno_id\"='"+Sno+"' and \"Cno_id\"='"+Cno+"'")
 
 
 def search_course(Cursor, Sno):  # 查找学生选修的课程，修改完成
@@ -132,11 +142,11 @@ if __name__ == "__main__":
     # print(search_stu(cur, '00001'))
     # print(get_grade(cur, '00002'))
     # publish_announcement(cur,'20001',"测试公告")
-    print(get_course_announcement(cur, '20001'))
-    # update_grade(cur, '00001', '20001', '99')
+    # print(get_course_announcement(cur, '20001'))
+    update_grade(cur, '00001', '20001', '99')
     # update_stu_info(cur, '00001')
     # print(update_stu_info(cur, '00001'))
-    # print(search_grade_from_id(cur, '00001', '20001'))
+    print(search_grade_from_id(cur, '00001', '20001'))
     # print(search_grade_from_name(cur, '00001', '数据库系统原理'))
     # print(search_teacher_num(cur, '10001'))
     # print(get_teacher_app01_course(cur, '10002'))

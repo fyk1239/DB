@@ -258,9 +258,11 @@
                </div>
                <div class="bo">
                 {% for announcement in curAnnouncement %}
-                <h3>
-                    {{announcement.0}}、{{announcement.1}}
-                </h3>
+                    {% for a in announcement %}
+                    <h3>
+                        {{ a.0 }} {{ a.1 }}
+                    </h3>
+                    {% endfor %}
                 {% endfor %}
                </div>
            </div>

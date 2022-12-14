@@ -77,6 +77,8 @@ class Grade(models.Model):
                             on_delete=models.CASCADE, null=True)
     # 课程成绩
     Gscore = models.DecimalField(max_digits=3, decimal_places=0, default=0)
+    # 课程分数等级，分数大于等于90为A，大于等于80小于90为B，大于等于70小于80为C，大于等于60小于70为D，小于60为E
+    Glevel = models.CharField(max_length=1, default='E')
 
 # 公告
 
