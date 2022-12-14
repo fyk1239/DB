@@ -8,7 +8,7 @@
             "Spasswd": "123",
             "Sname": "张三",
             "Sdept": "计算机科学与技术",
-            "Stot_credit": 20,
+            "Stot_credit": 0,
             "Scredit": 0,
             "Savg": 0
         }
@@ -22,7 +22,7 @@
             "Spasswd": "123",
             "Sname": "李四",
             "Sdept": "计算机科学与技术",
-            "Stot_credit": 20,
+            "Stot_credit": 0,
             "Scredit": 0,
             "Savg": 0
         }
@@ -36,7 +36,7 @@
             "Spasswd": "123",
             "Sname": "王五",
             "Sdept": "计算机科学与技术",
-            "Stot_credit": 20,
+            "Stot_credit": 0,
             "Scredit": 0,
             "Savg": 0
         }
@@ -69,7 +69,7 @@
         "fields": 
         {
             "Cno": "20001",
-            "Cname": "计算机网络",
+            "Cname": "数据库系统原理",
             "Ccredit": 4,
             "Cproperty": "必修",
             "Tno": "10001"
@@ -168,7 +168,7 @@
         "fields": 
         {
             "Ano": "40002",
-            "Acontent": "计算机网络课程公告: 请大家准时上课。",
+            "Acontent": "网络编程课程公告: 请大家准时上课。",
             "Cno": "20002"
         }
     }
