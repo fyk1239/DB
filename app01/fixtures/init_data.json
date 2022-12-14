@@ -71,6 +71,7 @@
             "Cno": "20001",
             "Cname": "计算机网络",
             "Ccredit": 4,
+            "Cproperty": "必修",
             "Tno": "10001"
         }
     },
@@ -80,8 +81,9 @@
         "fields": 
         {
             "Cno": "20002",
-            "Cname": "计算机组成原理",
+            "Cname": "网络编程",
             "Ccredit": 3,
+            "Cproperty": "选修",
             "Tno": "10002"
         }
     },

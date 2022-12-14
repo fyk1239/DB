@@ -1,9 +1,7 @@
-# from unicodedata import name
-
-# from sympy import re
 from app01.models import Student, Teacher, Course, Grade, Announcement
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
+from django.template import loader
 # Create your views here.
 
 
@@ -18,7 +16,7 @@ def loginstudent(request):
     if request.method == "GET":
         return render(request, 'loginstudent.html')
     # 若是post方法，如果用户名密码正确，则重定向到index，
-    # 否则返回报错信息页面（errormsg）
+    # 否则返回报错信息（errormsg）
     elif request.method == "POST":
         user = request.POST.get('user')
         pswd = request.POST.get('pswd')
@@ -26,6 +24,7 @@ def loginstudent(request):
         students = Student.objects.all()
         for student in students:
             if student.Sno == user and student.Spasswd == pswd:
+                request.session['curSno'] = user
                 return redirect('/student.html')
             elif student.Sno == user and student.Spasswd != pswd:
                 return render(request, 'loginstudent.html', {'msg': '密码错误'})
@@ -52,11 +51,44 @@ def loginteacher(request):
 
 
 def student(req):
-    return render(req, 'student.html')
+    template = loader.get_template('student.html')
+    curSno = req.session.get('curSno')
+    curUser = Student.objects.get(Sno=curSno)
+    req.session['curUser'] = curUser
+    # 传递当前学生的已选课程信息，如课程号、课程名、成绩、学分、课程属性等
+    gradeList = Grade.objects.filter(Sno=curUser).all()
+    tmpCourseList = Course.objects.all()
+    courseList = {}
+    for grade in gradeList:
+        for course in tmpCourseList:
+            if grade.Cno == course.Cno:
+                courseList.append(course)
+            if grade.Cno == course.Cno and grade.Gscore >= 60:
+                curUser.Scredit += course.Ccredit
+    content = {
+        'curUser': curUser,
+        'gradeList': gradeList,
+        'courseList': courseList
+    }
+    return HttpResponse(template.render(content, req))
 
 
 def studentsearch(req):
-    return render(req, 'studentsearch.html')
+    curSno = req.session.get('curSno')
+    curUser = Student.objects.get(Sno=curSno)
+    gradeList = Grade.objects.filter(Sno=curSno).all()
+    tmpCourseList = Course.objects.all()
+    courseList = {}
+    for grade in gradeList:
+        for course in tmpCourseList:
+            if grade.Cno == course.Cno:
+                courseList.append(course)
+    content = {
+        'curUser': curUser,
+        'gradeList': gradeList,
+        'courseList': courseList
+    }
+    return render(req, 'studentsearch.html', content)
 
 
 def teacher(req):
