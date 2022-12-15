@@ -61,6 +61,9 @@ class Course(models.Model):
     # 上课教师工号，外码约束
     Tno = models.ForeignKey('Teacher', to_field='Tno',
                             on_delete=models.CASCADE, null=True)
+    # 挂科率
+    Cfail_ratio = models.DecimalField(
+        max_digits=3, decimal_places=2, default=0)
 
 # 成绩
 

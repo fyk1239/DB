@@ -176,7 +176,7 @@
         <div class="right">
             <div class="topclick">
                 <div class="ltbox1">
-                    <p>欢迎您:user?<span class="caret"></span></p>
+                    <p>欢迎您:{{curTeacherName}}<span class="caret"></span></p>
                 </div>
                     <ul class="ltbox2">
                         <li class="li1">
@@ -200,17 +200,15 @@
                 <div class="head">
                     公告
                 </div>
-                <div class="bo">
-                    <div>
-                        公告一
-                    </div>
-                    <div>
-                        公告二
-                    </div>
-                    <div>
-                        公告三
-                    </div>
-                </div>
+                <div>
+                    {% for announcement in curAnnouncement %}
+                        {% for a in announcement %}
+                            <h3>
+                                {{ a.0 }} {{ a.1 }}
+                            </h3>
+                        {% endfor %}
+                    {% endfor %}                    
+               </div>
             </div>
         </div>
         

@@ -142,24 +142,102 @@ def studentsearch(req):
 
 
 def teacher(req):
-    template = loader.get_template('studentsearch.html')
+    template = loader.get_template('teacher.html')
     curTno = req.session.get('curTno')
     # 连接数据库
     conn = func.connect_db()
     cur = conn.cursor()
+    func.update_fail_ratio(cur)
     # 传递当前教师在数据库中的信息
-
+    curTeacher = func.search_teacher_num(cur, curTno)
+    # 根据教师号查询教师所教课程信息
+    curCourse = func.get_teacher_course(cur, curTno)
+    # 根据课程号查询教师所教课程的公告信息
+    curCourseNo = []
+    for c in curCourse:
+        curCourseNo.append(c[4])
+    # 按照课程号查询课程公告内容并存入列表
+    curAnnouncement = []
+    for c in curCourseNo:
+        tmpcourse = func.get_course_announcement(cur, c)
+        curAnnouncement.append(tmpcourse)
+    # 根据输入的课程号查询课程信息
+    if req.method == "POST":
+        courseNo = req.POST.get('coursenum')
+        courseName = req.POST.get('coursename')
+        if courseNo != '':
+            for c in curCourse:
+                if courseNo != c[4]:
+                    curCourse.remove(c)
+        if courseName != '':
+            for c in curCourse:
+                if courseName != c[0]:
+                    curCourse.remove(c)
+    # 传递上下文
+    content = {
+        'curTno': curTno,
+        'curTeacherName': curTeacher[1],
+        'curCourse': curCourse,
+        'curAnnouncement': curAnnouncement,
+    }
     # 关闭数据库连接
     func.close_db_connection(conn)
     return HttpResponse(template.render(content, req))
 
+# 暂时不用
+
 
 def teachersearch(req):
-    return render(req, 'teachersearch.html')
+    template = loader.get_template('teachersearch.html')
+    # 连接数据库
+    conn = func.connect_db()
+    cur = conn.cursor()
+    func.update_fail_ratio(cur)
+    # 关闭数据库连接
+    func.close_db_connection(conn)
+    return HttpResponse(template.render(content, req))
 
-
+# 
 def coursesearch(req):
-    return render(req, 'coursesearch.html')
+    template = loader.get_template('coursesearch.html')
+    courseNo = req.POST.get('coursenum')
+    courseName = req.POST.get('coursename')
+    # 连接数据库
+    conn = func.connect_db()
+    cur = conn.cursor()
+    curGrade = []
+    # 根据课程号查询选课学生
+    if courseNo != '':
+        curStudent = func.get_course_student(cur, courseNo)
+        for s in curStudent:
+            # 根据选课学生号查询学生成绩
+            curStudentNo = s[0]
+            curGrade.append(func.search_grade_from_id(
+                cur, curStudentNo, courseNo))
+    # 根据课程名查询选课学生
+    if courseName != '':
+        # 根据课程名查询课程号
+        courseNo = ''
+        courses = Course.objects.all()
+        for course in courses:
+            if courseName == course.Cname:
+                courseNo = course.courseNo
+                break
+        # 根据课程号查询选课学生
+        curStudent = func.get_course_student(cur, courseNo)
+        for s in curStudent:
+            # 根据选课学生号查询学生成绩
+            curStudentNo = s[0]
+            curGrade.append(func.search_grade_from_id(
+                cur, curStudentNo, courseNo))
+    # 传递上下文
+    content = {
+        'curGrade': curGrade,
+    }
+    func.update_fail_ratio(cur)
+    # 关闭数据库连接
+    func.close_db_connection(conn)
+    return HttpResponse(template.render(content, req))
 
 
 def send(req):
@@ -167,7 +245,32 @@ def send(req):
 
 
 def show(req):
-    return render(req, 'show.html')
+    template = loader.get_template('show.html')
+    curTno = req.session.get('curTno')
+    # 连接数据库
+    conn = func.connect_db()
+    cur = conn.cursor()
+    func.update_fail_ratio(cur)
+    # 传递当前教师在数据库中的信息
+    curTeacher = func.search_teacher_num(cur, curTno)
+    # 根据教师号查询教师所教课程信息
+    curCourse = func.get_teacher_course(cur, curTno)
+    # 根据课程号查询教师所教课程的公告信息
+    curCourseNo = []
+    for c in curCourse:
+        curCourseNo.append(c[4])
+    # 按照课程号查询课程公告内容并存入列表
+    curAnnouncement = []
+    for c in curCourseNo:
+        tmpcourse = func.get_course_announcement(cur, c)
+        curAnnouncement.append(tmpcourse)
+    # 传递上下文
+    content = {
+        'curTno': curTno,
+        'curTeacherName': curTeacher[1],
+        'curAnnouncement': curAnnouncement
+    }
+    return HttpResponse(template.render(content, req))
 
 
 def change(req):

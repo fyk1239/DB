@@ -142,6 +142,23 @@ def search_course(Cursor, Sno):  # 查找学生选修的课程，修改完成
     return Cursor.fetchall()
 
 
+def update_fail_ratio(Cursor):  # 更新课程挂科率，修改完成
+    Cursor.execute("select * from public.app01_course")
+    course = Cursor.fetchall()
+    for c in course:
+        Cursor.execute(
+            "select count(*) from public.app01_grade where \"Cno_id\"='"+c[0]+"' and \"Glevel\"='E'")
+        fail = Cursor.fetchone()[0]
+        Cursor.execute(
+            "select count(*) from public.app01_grade where \"Cno_id\"='"+c[0]+"'")
+        total = Cursor.fetchone()[0]
+        fail_ratio = fail/total
+        Cursor.execute("update public.app01_course set \"Cfail_ratio\"="+str(fail_ratio) +
+                       " where \"Cno\"='"+c[0]+"'")
+    Cursor.execute("select \"Cfail_ratio\" from public.app01_course")
+    return Cursor.fetchall()[0]
+
+
 if __name__ == "__main__":
     conn = connect_db()  # 连接数据库
     cur = conn.cursor()  # 创建会话
@@ -149,14 +166,15 @@ if __name__ == "__main__":
     # print(get_grade(cur, '00002'))
     # publish_announcement(cur,'20001',"测试公告")
     # print(get_course_announcement(cur, '20001'))
-    # update_grade(cur, '00001', '20001', '99')
+    # update_grade(cur, '00001', '20001', '59')
     # update_stu_info(cur, '00001')
     # print(update_stu_info(cur, '00001'))
     # print(search_grade_from_id(cur, '00001', '20001'))
     # print(search_grade_from_name(cur, '00001', '数据库系统原理'))
     # print(search_teacher_num(cur, '10001'))
-    # print(get_teacher_course(cur, '10002'))
+    # print(get_teacher_course(cur, '10001'))
     # print(search_course(cur, '00001'))
     # print(type(search_course(cur, '00001')[0]))
     print(get_course_student(cur, '20001'))
+    # print(update_fail_ratio(cur))
     close_db_connection(conn)  # 关闭数据库连接
