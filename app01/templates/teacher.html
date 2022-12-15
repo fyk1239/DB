@@ -173,6 +173,17 @@
         .course  .table tr th{
             padding:16px;
         }
+        .search{
+            margin-left: 100px;
+            margin-right: 100px;
+            margin-bottom: 20px;
+            border: 1px solid #438eb9;
+            padding: 40px;
+        }
+        .search h2{
+            font-family: 楷体;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -256,20 +267,20 @@
                     </tbody>
                 </table>
                 <div class="search">
-                    <h2>筛选课程信息</h2>
+                    <h2>查看课程信息</h2>
                     <form method="post">
                         {% csrf_token %}
                         <div class="form-group">
+                            <label for="exampleInputName1">课程号</label>
+                            <input type="text" class="form-control" id="courseNo" placeholder="课程号" name="courseNo">
+                        </div>
+                        <!-- <div class="form-group">
                             <label for="exampleInputName1">课程名</label>
                             <input type="text" class="form-control" id="coursename" placeholder="课程名" name="coursename">
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputName1">课程号</label>
-                            <input type="text" class="form-control" id="coursenum" placeholder="课程号" name="coursenum">
-                        </div>
                         <a href="/teacher.html">
                             <button type="submit" class="btn btn-default">查询</button>
-                        </a>
+                        </a> -->
                         <a href="/coursesearch.html">
                             <button type="submit" class="btn btn-default">查看课程信息</button>
                         </a>

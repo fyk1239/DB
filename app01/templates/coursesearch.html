@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Course</title>
@@ -9,21 +10,25 @@
     <!--生产版本-->
     <!--<link rel="stylesheet" href="static/plugins/bootstrap-3.4.1/css/bootstrap.min.css">-->
     <style>
-        body{
-            margin:0;
+        body {
+            margin: 0;
             background-color: #edf9ff;
         }
-        .left{
+
+        .left {
             float: left;
         }
-        .right{
+
+        .right {
             float: right;
         }
-        .header{
+
+        .header {
             background-color: #438eb9;
-            height:45px
+            height: 45px
         }
-        .header .left{
+
+        .header .left {
             color: #fff;
             font-size: 24px;
             text-shadow: none;
@@ -32,9 +37,10 @@
             font-weight: 700;
             font-family: 楷体;
             margin-left: 20px;
-            float:left;
+            float: left;
         }
-        .header .right{
+
+        .header .right {
             background-color: #62a8d1;
             line-height: 45px;
             height: 45px;
@@ -47,11 +53,13 @@
             font-family: 楷体;
             margin-left: 20px;
         }
-        .body{
-            margin-left:180px;
+
+        .body {
+            margin-left: 180px;
             margin-right: 180px;
         }
-        .first{
+
+        .first {
             position: relative;
             z-index: auto;
             border-bottom: 1px solid #e5e5e5;
@@ -64,108 +72,122 @@
             font-weight: 700;
             font-family: 楷体;
         }
-        .second{
-            height:440px;
+
+        .second {
+            height: 440px;
             padding-top: 20px;
             margin-left: 100px;
             margin-right: 100px;
             background-color: white;
         }
-        .academic{
+
+        .academic {
             padding: 0;
             -webkit-box-shadow: none;
             box-shadow: none;
             margin: 3px 50px;
             border: 1px solid #CCC;
-            float:left;
+            float: left;
             background-color: white;
         }
-        .academic .head{
+
+        .academic .head {
             -webkit-box-sizing: content-box;
             -moz-box-sizing: content-box;
             box-sizing: content-box;
             position: relative;
             min-height: 38px;
             background: #f7f7f7 repeat-x;
-            background-image: -webkit-linear-gradient(top,#fff 0,#eee 100%);
-            background-image: -o-linear-gradient(top,#fff 0,#eee 100%);
-            background-image: linear-gradient(to bottom,#fff 0,#eee 100%);
+            background-image: -webkit-linear-gradient(top, #fff 0, #eee 100%);
+            background-image: -o-linear-gradient(top, #fff 0, #eee 100%);
+            background-image: linear-gradient(to bottom, #fff 0, #eee 100%);
             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeeeeee', GradientType=0);
             color: #669fc7;
             border-bottom: 1px solid #DDD;
             padding-left: 12px;
         }
-        .academic .bo{
+
+        .academic .bo {
             padding: 20px;
         }
-        .academic .bo .infobox{
+
+        .academic .bo .infobox {
             border: 1px solid #CCC;
             height: 100px;
-            width:250px;
-            margin:5px;
+            width: 250px;
+            margin: 5px;
             text-align: center;
         }
-        .announcement{
+
+        .announcement {
             padding: 0;
             -webkit-box-shadow: none;
             box-shadow: none;
             margin: 3px 50px;
             border: 1px solid #CCC;
-            float:right;
+            float: right;
             background-color: white;
         }
-        .announcement .bo{
-            height:320px;
-            width:500px;
+
+        .announcement .bo {
+            height: 320px;
+            width: 500px;
             margin: 10px;
         }
-        .announcement .bo h3{
+
+        .announcement .bo h3 {
             height: 40px;
         }
-        .announcement .head{
+
+        .announcement .head {
             -webkit-box-sizing: content-box;
             -moz-box-sizing: content-box;
             box-sizing: content-box;
             position: relative;
             min-height: 38px;
             background: #f7f7f7 repeat-x;
-            background-image: -webkit-linear-gradient(top,#fff 0,#eee 100%);
-            background-image: -o-linear-gradient(top,#fff 0,#eee 100%);
-            background-image: linear-gradient(to bottom,#fff 0,#eee 100%);
+            background-image: -webkit-linear-gradient(top, #fff 0, #eee 100%);
+            background-image: -o-linear-gradient(top, #fff 0, #eee 100%);
+            background-image: linear-gradient(to bottom, #fff 0, #eee 100%);
             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeeeeee', GradientType=0);
             color: #669fc7;
             border-bottom: 1px solid #DDD;
             padding-left: 12px;
         }
-        .third{
+
+        .third {
             margin-left: 100px;
             margin-right: 100px;
         }
-        .course{
+
+        .course {
             padding: 0;
             -webkit-box-shadow: none;
             box-shadow: none;
             border: 1px solid #CCC;
             background-color: white;
         }
-        .course .head{
+
+        .course .head {
             -webkit-box-sizing: content-box;
             -moz-box-sizing: content-box;
             box-sizing: content-box;
             min-height: 38px;
             background: #f7f7f7 repeat-x;
-            background-image: -webkit-linear-gradient(top,#fff 0,#eee 100%);
-            background-image: -o-linear-gradient(top,#fff 0,#eee 100%);
-            background-image: linear-gradient(to bottom,#fff 0,#eee 100%);
+            background-image: -webkit-linear-gradient(top, #fff 0, #eee 100%);
+            background-image: -o-linear-gradient(top, #fff 0, #eee 100%);
+            background-image: linear-gradient(to bottom, #fff 0, #eee 100%);
             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeeeeee', GradientType=0);
             color: #669fc7;
             border-bottom: 1px solid #DDD;
             padding-left: 12px;
         }
-        .course .bo .table tr th{
-            padding:16px;
+
+        .course .bo .table tr th {
+            padding: 16px;
         }
-        .course .bo .change{
+
+        .course .bo .change {
             height: 60px;
             width: 82px;
             position: relative;
@@ -174,19 +196,22 @@
             left: -42px;
             margin-bottom: 20px;
         }
-        .search{
+
+        .search {
             margin-left: 100px;
             margin-right: 100px;
             margin-bottom: 20px;
             border: 1px solid #438eb9;
             padding: 40px;
         }
-        .search h2{
+
+        .search h2 {
             font-family: 楷体;
             text-align: center;
         }
     </style>
 </head>
+
 <body>
     <div class="header">
         <div class="left">四川大学成绩管理系统（教师端）</div>
@@ -219,48 +244,58 @@
                 <div class="bo">
                     <table class="table">
                         <thead>
-                            <tr> <th>姓名</th> <th>学号</th> <th>分数</th> <th>等级</th> <th>是否挂科</th> </tr>
+                            <tr>
+                                <th>姓名</th>
+                                <th>学号</th>
+                                <th>分数</th>
+                                <th>等级</th>
+                                <th>是否挂科</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            <tr> <th>fjr</th> <th>2020141460100</th> <th>59</th> <th>D</th> <th>是</th> </tr>
+                            {% for student in students %}
+                            <tr>
+                                <th>{{student.name}}</th>
+                                <th>{{student.id}}</th>
+                                <th>{{student.score}}</th>
+                                <th>{{student.grade}}</th>
+                                <th>{{student.isFail}}</th>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <th>fjr</th>
+                                <th>2020141460100</th>
+                                <th>59</th>
+                                <th>E</th>
+                                <th>是</th>
+                            </tr>
                         </tbody>
                     </table>
-                    <div class="change">
-                        <a href="/change.html">
-                            <button type="button" class="btn btn-primary">修改成绩</button>
-                        </a>
-                    </div>
                     <div style="margin-left: 50%;left: -34px;position: relative;margin-bottom: 20px;">
                         <a href="/send.html">
-                            <button type="button" class="btn btn-primary">发公告</button>
+                            <button type="submit" class="btn btn-primary">发公告</button>
                         </a>
                     </div>
                     <div class="search">
-                        <h2>筛选学生信息</h2>
+                        <h2>修改学生成绩</h2>
                         <form method="post">
                             {% csrf_token %}
                             <div class="form-group">
-                              <label for="exampleInputName1">姓名</label>
-                              <input type="text" class="form-control" id="coursename" placeholder="姓名" name="coursename">
-                            </div>
-                            <div class="form-group">
                                 <label for="exampleInputName1">学号</label>
-                                <input type="text" class="form-control" id="coursenum" placeholder="学号" name="coursenum">
+                                <input type="text" class="form-control" id="studentNo" placeholder="学号"
+                                    name="studentNo">
                             </div>
-                            <!--加-->
-                            <div class="form-group">
-                                <label for="exampleInputName1">区间查询成绩</label>
-                                <input type="text" class="form-control" id="coursenum" placeholder="最小值" name="coursemin" style="margin-bottom: 10px;">
-                                <input type="text" class="form-control" id="coursenum" placeholder="最大值" name="coursemax">
+                            <div class="change">
+                                <a href="/entry.html">
+                                    <button type="submit" class="btn btn-primary">修改成绩</button>
+                                </a>
                             </div>
-                            <a href="/studentsearch.html">
-                                <button type="submit" class="btn btn-default">查询</button>
-                            </a>
-                          </form>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>

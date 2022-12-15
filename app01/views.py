@@ -144,12 +144,15 @@ def studentsearch(req):
 def teacher(req):
     template = loader.get_template('teacher.html')
     curTno = req.session.get('curTno')
+    req.session['curTno'] = curTno
     # 连接数据库
     conn = func.connect_db()
     cur = conn.cursor()
     func.update_fail_ratio(cur)
     # 传递当前教师在数据库中的信息
     curTeacher = func.search_teacher_num(cur, curTno)
+    curTeacherName = curTeacher[1]
+    req.session['curTeacherName'] = curTeacherName
     # 根据教师号查询教师所教课程信息
     curCourse = func.get_teacher_course(cur, curTno)
     # 根据课程号查询教师所教课程的公告信息
@@ -161,22 +164,10 @@ def teacher(req):
     for c in curCourseNo:
         tmpcourse = func.get_course_announcement(cur, c)
         curAnnouncement.append(tmpcourse)
-    # 根据输入的课程号查询课程信息
-    if req.method == "POST":
-        courseNo = req.POST.get('coursenum')
-        courseName = req.POST.get('coursename')
-        if courseNo != '':
-            for c in curCourse:
-                if courseNo != c[4]:
-                    curCourse.remove(c)
-        if courseName != '':
-            for c in curCourse:
-                if courseName != c[0]:
-                    curCourse.remove(c)
     # 传递上下文
     content = {
         'curTno': curTno,
-        'curTeacherName': curTeacher[1],
+        'curTeacherName': curTeacherName,
         'curCourse': curCourse,
         'curAnnouncement': curAnnouncement,
     }
@@ -200,30 +191,18 @@ def teachersearch(req):
 # 
 def coursesearch(req):
     template = loader.get_template('coursesearch.html')
-    courseNo = req.POST.get('coursenum')
-    courseName = req.POST.get('coursename')
+    # 接收当前教师姓名
+    curTeacherName = req.session.get('curTeacherName')
+    req.session['curTeacherName'] = curTeacherName
+    # 接收用户输入的课程号，未接收到
+    courseNo = req.POST.get('courseNo')
+    print(courseNo)
     # 连接数据库
     conn = func.connect_db()
     cur = conn.cursor()
     curGrade = []
     # 根据课程号查询选课学生
-    if courseNo != '':
-        curStudent = func.get_course_student(cur, courseNo)
-        for s in curStudent:
-            # 根据选课学生号查询学生成绩
-            curStudentNo = s[0]
-            curGrade.append(func.search_grade_from_id(
-                cur, curStudentNo, courseNo))
-    # 根据课程名查询选课学生
-    if courseName != '':
-        # 根据课程名查询课程号
-        courseNo = ''
-        courses = Course.objects.all()
-        for course in courses:
-            if courseName == course.Cname:
-                courseNo = course.courseNo
-                break
-        # 根据课程号查询选课学生
+    if courseNo != None:
         curStudent = func.get_course_student(cur, courseNo)
         for s in curStudent:
             # 根据选课学生号查询学生成绩
@@ -232,6 +211,7 @@ def coursesearch(req):
                 cur, curStudentNo, courseNo))
     # 传递上下文
     content = {
+        'curTeacherName': curTeacherName,
         'curGrade': curGrade,
     }
     func.update_fail_ratio(cur)
@@ -241,7 +221,8 @@ def coursesearch(req):
 
 
 def send(req):
-    return render(req, 'send.html')
+    template = loader.get_template('send.html')
+    return HttpResponse(template.render(content, req))
 
 
 def show(req):
@@ -270,6 +251,8 @@ def show(req):
         'curTeacherName': curTeacher[1],
         'curAnnouncement': curAnnouncement
     }
+    # 关闭数据库连接
+    func.close_db_connection(conn)
     return HttpResponse(template.render(content, req))
 
 
@@ -278,7 +261,34 @@ def change(req):
 
 
 def entry(req):
-    return render(req, 'entry.html')
+    template = loader.get_template('entry.html')
+    # 接收当前教师姓名
+    curTeacherName = req.session.get('curTeacherName')
+    req.session['curTeacherName'] = curTeacherName
+    # 接收用户输入的课程号，未接收到
+    courseNo = req.POST.get('courseNo')
+    print(courseNo)
+    # 连接数据库
+    conn = func.connect_db()
+    cur = conn.cursor()
+    curGrade = []
+    # 根据课程号查询选课学生
+    if courseNo != None:
+        curStudent = func.get_course_student(cur, courseNo)
+        for s in curStudent:
+            # 根据选课学生号查询学生成绩
+            curStudentNo = s[0]
+            curGrade.append(func.search_grade_from_id(
+                cur, curStudentNo, courseNo))
+    # 传递上下文
+    content = {
+        'curTeacherName': curTeacherName,
+        'curGrade': curGrade,
+    }
+    func.update_fail_ratio(cur)
+    # 关闭数据库连接
+    func.close_db_connection(conn)
+    return HttpResponse(template.render(content, req))
 
 
 def password(req):
