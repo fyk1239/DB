@@ -62,7 +62,7 @@ def student(req):
     curCourse = func.search_course(cur, curSno)
     curCourseNo = []
     for c in curCourse:
-        curCourseNo.append(c[2])
+        curCourseNo.append(c[1])
     # 按照课程号查询课程公告内容并存入列表
     curAnnouncement = []
     for i in range(len(curCourseNo)):
@@ -93,12 +93,35 @@ def studentsearch(req):
     curCourse = func.search_course(cur, curSno)
     curCourseNo = []
     for c in curCourse:
-        curCourseNo.append(c[2])
+        curCourseNo.append(c[1])
     # 按照课程号查询课程公告内容并存入列表
     curAnnouncement = []
     for i in range(len(curCourseNo)):
         tmpcourse = func.get_course_announcement(cur, curCourseNo[i])
         curAnnouncement.append(tmpcourse)
+    # 若是post方法，则接收用户输入的筛选条件
+    if req.method == "POST":
+        courseName = req.POST.get('coursename')
+        courseNo = req.POST.get('coursenum')
+        courseProperty = req.POST.get('courseattribute')
+        courseLevel = req.POST.get('courselevel')
+        # 筛选对应的的课程信息
+        if courseName != '':
+            for c in curCourse:
+                if courseName != c[0]:
+                    curCourse.remove(c)
+        if courseNo != '':
+            for c in curCourse:
+                if courseNo != c[1]:
+                    curCourse.remove(c)
+        if courseProperty != '':
+            for c in curCourse:
+                if courseProperty != c[3]:
+                    curCourse.remove(c)
+        if courseLevel != '':
+            for c in curCourse:
+                if courseLevel != c[5]:
+                    curCourse.remove(c)
     # 根据输入的课程号查询课程信息，如课程名、学分、课程属性、课程分数、分数等级
     content = {
         'curSno': curSno,
@@ -108,6 +131,7 @@ def studentsearch(req):
         'curStudentCredit': curStudent[5],
         'curStudentAvgScore': curStudent[6],
         'curAnnouncement': curAnnouncement,
+        'curCourse': curCourse,
     }
     # 关闭数据库连接
     func.close_db_connection(conn)

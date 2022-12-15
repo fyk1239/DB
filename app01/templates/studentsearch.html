@@ -257,7 +257,6 @@
            </div>
            <div class="clear:both"></div>
         </div>
-        <!-- 等待修改 -->
         <div class="third">
             <div class="course">
                 <div class="head">
@@ -269,7 +268,13 @@
                             <tr> <th>课程名</th> <th>课程号</th> <th>课程学分</th> <th>课程属性</th> <th>课程分数</th> <th>分数等级</th> </tr>
                         </thead>
                         <tbody>
-                            <tr> <th>数据库</th> <th>306551</th> <th>3</th> <th>必修</th> <th>80</th> <th>A-</th> </tr>
+                            {% for course in curCourse %}
+                                <tr> 
+                                    {% for c in course %}
+                                        <th>{{c}}</th>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                     <div class="search">
@@ -286,11 +291,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputName1">课程属性</label>
-                                <input type="text" class="form-control" id="coursenum" placeholder="课程属性" name="courseattribute">
+                                <input type="text" class="form-control" id="coursepro" placeholder="课程属性" name="courseattribute">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputName1">课程成绩等级</label>
-                                <input type="text" class="form-control" id="coursenum" placeholder="课程号成绩等级" name="courselevel">
+                                <input type="text" class="form-control" id="courselevel" placeholder="课程号成绩等级" name="courselevel">
                             </div>
                             <a href="/studentsearch.html">
                                 <button type="submit" class="btn btn-default">查询</button>

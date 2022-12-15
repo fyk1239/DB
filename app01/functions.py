@@ -91,7 +91,7 @@ def search_grade_from_name(Cursor, Sno, Cname):  # 通过课程名查找某学�
 
 def get_course_announcement(Cursor, Cno):  # 通过课程号查找课程公告，修改完成
     Cursor.execute(
-        "select * from public.app01_announcement where \"Cno_id\"='"+Cno+"'")
+        "select * from public.app01_announcement where \"Cno_id\"='"+str(Cno)+"'")
     return Cursor.fetchall()
 
 
@@ -132,7 +132,7 @@ def update_grade(Cursor, Sno, Cno, Gscore):  # 修改学生成绩，修改完成
 
 def search_course(Cursor, Sno):  # 查找学生选修的课程，修改完成
     Cursor.execute(
-        "select * from public.app01_grade where app01_grade.\"Sno_id\"='"+Sno+"'")
+        "select \"Cname\", \"Cno\", \"Ccredit\", \"Cproperty\", \"Gscore\", \"Glevel\" from public.app01_grade join public.app01_course on public.app01_grade.\"Cno_id\" = public.app01_course.\"Cno\" where app01_grade.\"Sno_id\"='"+Sno+"'")
     return Cursor.fetchall()
 
 
@@ -143,13 +143,13 @@ if __name__ == "__main__":
     # print(get_grade(cur, '00002'))
     # publish_announcement(cur,'20001',"测试公告")
     # print(get_course_announcement(cur, '20001'))
-    update_grade(cur, '00001', '20001', '99')
+    # update_grade(cur, '00001', '20001', '99')
     # update_stu_info(cur, '00001')
     # print(update_stu_info(cur, '00001'))
-    print(search_grade_from_id(cur, '00001', '20001'))
+    # print(search_grade_from_id(cur, '00001', '20001'))
     # print(search_grade_from_name(cur, '00001', '数据库系统原理'))
     # print(search_teacher_num(cur, '10001'))
     # print(get_teacher_app01_course(cur, '10002'))
-    # print(search_course(cur, '00001')[0])
+    print(search_course(cur, '00001'))
     # print(type(search_course(cur, '00001')[0]))
     close_db_connection(conn)  # 关闭数据库连接
