@@ -45,6 +45,7 @@ def loginteacher(request):
         teachers = Teacher.objects.all()
         for teacher in teachers:
             if teacher.Tno == user and teacher.Tpasswd == pswd:
+                request.session['curTno'] = user
                 return redirect('/teacher.html')
         else:
             errormsg = "用户名或密码错误!"
@@ -57,6 +58,8 @@ def student(req):
     # 连接数据库
     conn = func.connect_db()
     cur = conn.cursor()
+    # 更新学生学分及平均成绩
+    func.update_stu_info(cur, curSno)
     # 传递当前学生在数据库中的信息
     curStudent = func.search_stu(cur, curSno)
     curCourse = func.search_course(cur, curSno)
@@ -139,7 +142,16 @@ def studentsearch(req):
 
 
 def teacher(req):
-    return render(req, 'teacher.html')
+    template = loader.get_template('studentsearch.html')
+    curTno = req.session.get('curTno')
+    # 连接数据库
+    conn = func.connect_db()
+    cur = conn.cursor()
+    # 传递当前教师在数据库中的信息
+
+    # 关闭数据库连接
+    func.close_db_connection(conn)
+    return HttpResponse(template.render(content, req))
 
 
 def teachersearch(req):

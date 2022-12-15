@@ -102,9 +102,15 @@ def search_teacher_num(Cursor, Tno):  # 获取对应工号的教师的信息，�
     return Cursor.fetchone()
 
 
-def get_teacher_app01_course(Cursor, Tno):  # 查找教师教授的课，修改完成
+def get_teacher_course(Cursor, Tno):  # 查找教师教授的课，修改完成
     Cursor.execute(
         "select * from public.app01_teacher join public.app01_course on app01_teacher.\"Tno\"=app01_course.\"Tno_id\" where app01_teacher.\"Tno\"='"+Tno+"'")
+    return Cursor.fetchall()
+
+
+def get_course_student(Cursor, Cno):  # 查找修读某课程的学生，修改完成
+    Cursor.execute(
+        "select * from public.app01_student join public.app01_grade on app01_student.\"Sno\"=app01_grade.\"Sno_id\" where app01_grade.\"Cno_id\"='"+Cno+"'")
     return Cursor.fetchall()
 
 
@@ -149,7 +155,8 @@ if __name__ == "__main__":
     # print(search_grade_from_id(cur, '00001', '20001'))
     # print(search_grade_from_name(cur, '00001', '数据库系统原理'))
     # print(search_teacher_num(cur, '10001'))
-    # print(get_teacher_app01_course(cur, '10002'))
-    print(search_course(cur, '00001'))
+    # print(get_teacher_course(cur, '10002'))
+    # print(search_course(cur, '00001'))
     # print(type(search_course(cur, '00001')[0]))
+    print(get_course_student(cur, '20001'))
     close_db_connection(conn)  # 关闭数据库连接
