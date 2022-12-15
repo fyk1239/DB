@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Course</title>
@@ -9,21 +10,25 @@
     <!--生产版本-->
     <!--<link rel="stylesheet" href="static/plugins/bootstrap-3.4.1/css/bootstrap.min.css">-->
     <style>
-        body{
-            margin:0;
+        body {
+            margin: 0;
             background-color: #edf9ff;
         }
-        .left{
+
+        .left {
             float: left;
         }
-        .right{
+
+        .right {
             float: right;
         }
-        .header{
+
+        .header {
             background-color: #438eb9;
-            height:45px
+            height: 45px
         }
-        .header .left{
+
+        .header .left {
             color: #fff;
             font-size: 24px;
             text-shadow: none;
@@ -32,9 +37,10 @@
             font-weight: 700;
             font-family: 楷体;
             margin-left: 20px;
-            float:left;
+            float: left;
         }
-        .header .right{
+
+        .header .right {
             background-color: #62a8d1;
             line-height: 45px;
             height: 45px;
@@ -47,11 +53,13 @@
             font-family: 楷体;
             margin-left: 20px;
         }
-        .body{
-            margin-left:180px;
+
+        .body {
+            margin-left: 180px;
             margin-right: 180px;
         }
-        .first{
+
+        .first {
             position: relative;
             z-index: auto;
             border-bottom: 1px solid #e5e5e5;
@@ -64,111 +72,126 @@
             font-weight: 700;
             font-family: 楷体;
         }
-        .second{
-            height:440px;
+
+        .second {
+            height: 440px;
             padding-top: 20px;
             margin-left: 100px;
             margin-right: 100px;
             background-color: white;
         }
-        .academic{
+
+        .academic {
             padding: 0;
             -webkit-box-shadow: none;
             box-shadow: none;
             margin: 3px 50px;
             border: 1px solid #CCC;
-            float:left;
+            float: left;
             background-color: white;
         }
-        .academic .head{
+
+        .academic .head {
             -webkit-box-sizing: content-box;
             -moz-box-sizing: content-box;
             box-sizing: content-box;
             position: relative;
             min-height: 38px;
             background: #f7f7f7 repeat-x;
-            background-image: -webkit-linear-gradient(top,#fff 0,#eee 100%);
-            background-image: -o-linear-gradient(top,#fff 0,#eee 100%);
-            background-image: linear-gradient(to bottom,#fff 0,#eee 100%);
+            background-image: -webkit-linear-gradient(top, #fff 0, #eee 100%);
+            background-image: -o-linear-gradient(top, #fff 0, #eee 100%);
+            background-image: linear-gradient(to bottom, #fff 0, #eee 100%);
             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeeeeee', GradientType=0);
             color: #669fc7;
             border-bottom: 1px solid #DDD;
             padding-left: 12px;
         }
-        .academic .bo{
+
+        .academic .bo {
             padding: 20px;
         }
-        .academic .bo .infobox{
+
+        .academic .bo .infobox {
             border: 1px solid #CCC;
             height: 100px;
-            width:250px;
-            margin:5px;
+            width: 250px;
+            margin: 5px;
             text-align: center;
         }
-        .announcement{
+
+        .announcement {
             padding: 0;
             -webkit-box-shadow: none;
             box-shadow: none;
             margin: 3px 50px;
             border: 1px solid #CCC;
-            float:right;
+            float: right;
             background-color: white;
         }
-        .announcement .bo{
-            height:320px;
-            width:500px;
+
+        .announcement .bo {
+            height: 320px;
+            width: 500px;
             margin: 10px;
         }
-        .announcement .bo h3{
+
+        .announcement .bo h3 {
             height: 40px;
         }
-        .announcement .head{
+
+        .announcement .head {
             -webkit-box-sizing: content-box;
             -moz-box-sizing: content-box;
             box-sizing: content-box;
             position: relative;
             min-height: 38px;
             background: #f7f7f7 repeat-x;
-            background-image: -webkit-linear-gradient(top,#fff 0,#eee 100%);
-            background-image: -o-linear-gradient(top,#fff 0,#eee 100%);
-            background-image: linear-gradient(to bottom,#fff 0,#eee 100%);
+            background-image: -webkit-linear-gradient(top, #fff 0, #eee 100%);
+            background-image: -o-linear-gradient(top, #fff 0, #eee 100%);
+            background-image: linear-gradient(to bottom, #fff 0, #eee 100%);
             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeeeeee', GradientType=0);
             color: #669fc7;
             border-bottom: 1px solid #DDD;
             padding-left: 12px;
         }
-        .third{
+
+        .third {
             margin-left: 100px;
             margin-right: 100px;
         }
-        .course{
+
+        .course {
             padding: 0;
             -webkit-box-shadow: none;
             box-shadow: none;
             border: 1px solid #CCC;
             background-color: white;
         }
-        .course .head{
+
+        .course .head {
             -webkit-box-sizing: content-box;
             -moz-box-sizing: content-box;
             box-sizing: content-box;
             min-height: 38px;
             background: #f7f7f7 repeat-x;
-            background-image: -webkit-linear-gradient(top,#fff 0,#eee 100%);
-            background-image: -o-linear-gradient(top,#fff 0,#eee 100%);
-            background-image: linear-gradient(to bottom,#fff 0,#eee 100%);
+            background-image: -webkit-linear-gradient(top, #fff 0, #eee 100%);
+            background-image: -o-linear-gradient(top, #fff 0, #eee 100%);
+            background-image: linear-gradient(to bottom, #fff 0, #eee 100%);
             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeeeeee', GradientType=0);
             color: #669fc7;
             border-bottom: 1px solid #DDD;
             padding-left: 12px;
         }
-        .course .bo{
+
+        .course .bo {
             height: 1200px;
         }
-        .course .bo .table tr th{
-            padding:16px;
+
+        .course .bo .table tr th {
+            padding: 16px;
         }
-        .course .bo .change{
+
+        .course .bo .change {
             height: 60px;
             width: 82px;
             position: relative;
@@ -177,18 +200,21 @@
             left: -42px;
             margin-bottom: 20px;
         }
-        .search{
+
+        .search {
             margin-left: 100px;
             margin-right: 100px;
             border: 1px solid #438eb9;
             padding: 40px;
         }
-        .search h2{
+
+        .search h2 {
             font-family: 楷体;
             text-align: center;
         }
     </style>
 </head>
+
 <body>
     <div class="header">
         <div class="left">四川大学成绩管理系统（教师端）</div>
@@ -197,59 +223,55 @@
                 <div class="ltbox1">
                     <p>欢迎您:{{curTeacherName}}<span class="caret"></span></p>
                 </div>
-                    <ul class="ltbox2">
-                        <li class="li1">
-                            <a href="/teacher.html">首页</a>
-                        </li>
-                        <li class="li1">
-                            <a id="p" href="/password.html">修改密码</a>
-                        </li>
-                        <li class="li1">
-                            <a href="/login.html">注销</a>
-                        </li>
-                    </ul>
+                <ul class="ltbox2">
+                    <li class="li1">
+                        <a href="/teacher.html">首页</a>
+                    </li>
+                    <li class="li1">
+                        <a id="p" href="/password.html">修改密码</a>
+                    </li>
+                    <li class="li1">
+                        <a href="/login.html">注销</a>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="clear:both"></div>
     </div>
     <div class="body">
-
-    
         <div class="third">
             <div class="course">
                 <div class="head">
                     修改成绩
                 </div>
                 <div class="bo">
-                    
                     <div class="search">
                         <h2>修改成绩</h2>
-                        <form method="get">
+                        <form method="post">
                             {% csrf_token %}
                             <div class="form-group">
-                              <label for="exampleInputName1">平时成绩</label>
-                              <input type="text" class="form-control" id="usual" placeholder="平时成绩" name="usual">
+                                <label for="exampleInputName1">平时成绩</label>
+                                <input type="text" class="form-control" id="usual" placeholder="平时成绩" name="usual">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputName1">出勤成绩</label>
-                                <input type="text" class="form-control" id="attendance" placeholder="出勤成绩" name="attendance">
+                                <input type="text" class="form-control" id="attendance" placeholder="出勤成绩"
+                                    name="attendance">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputName1">期末考核成绩</label>
                                 <input type="text" class="form-control" id="final" placeholder="期末考核成绩" name="final">
                             </div>
                             <!--加-->
-                            
-                            <div>
-                                <a href="/change.html">
-                                    <button type="submit" class="btn btn-default">保存</button>
-                                </a>
+                            <div class="change">
+                                <button type="submit" class="btn btn-default">保存</button>
                             </div>
-                          </form>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>

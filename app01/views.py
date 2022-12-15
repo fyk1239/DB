@@ -148,11 +148,15 @@ def teacher(req):
     # 连接数据库
     conn = func.connect_db()
     cur = conn.cursor()
-    func.update_fail_ratio(cur)
     # 传递当前教师在数据库中的信息
     curTeacher = func.search_teacher_num(cur, curTno)
     curTeacherName = curTeacher[1]
     req.session['curTeacherName'] = curTeacherName
+    # 接收用户输入的课程号
+    courseNo = req.POST.get('courseNo')
+    if courseNo != None:
+        req.session['courseNo'] = courseNo
+        return redirect('/coursesearch.html')
     # 根据教师号查询教师所教课程信息
     curCourse = func.get_teacher_course(cur, curTno)
     # 根据课程号查询教师所教课程的公告信息
@@ -183,21 +187,26 @@ def teachersearch(req):
     # 连接数据库
     conn = func.connect_db()
     cur = conn.cursor()
-    func.update_fail_ratio(cur)
     # 关闭数据库连接
     func.close_db_connection(conn)
     return HttpResponse(template.render(content, req))
 
-# 
+
 def coursesearch(req):
     template = loader.get_template('coursesearch.html')
     # 接收当前教师姓名
     curTeacherName = req.session.get('curTeacherName')
     req.session['curTeacherName'] = curTeacherName
-    # 接收用户输入的课程号，未接收到
-    courseNo = req.POST.get('courseNo')
-    print(courseNo)
+    # 接收用户输入的课程号
+    courseNo = req.session.get('courseNo')
+    req.session['courseNo'] = courseNo
+    # 接收用户输入的学号
+    studentNo = req.POST.get('studentNo')
+    if studentNo != None:
+        req.session['studentNo'] = studentNo
+        return redirect('/entry.html')
     # 连接数据库
+    studentNo = req.session.get('studentNo')
     conn = func.connect_db()
     cur = conn.cursor()
     curGrade = []
@@ -214,7 +223,6 @@ def coursesearch(req):
         'curTeacherName': curTeacherName,
         'curGrade': curGrade,
     }
-    func.update_fail_ratio(cur)
     # 关闭数据库连接
     func.close_db_connection(conn)
     return HttpResponse(template.render(content, req))
@@ -231,7 +239,6 @@ def show(req):
     # 连接数据库
     conn = func.connect_db()
     cur = conn.cursor()
-    func.update_fail_ratio(cur)
     # 传递当前教师在数据库中的信息
     curTeacher = func.search_teacher_num(cur, curTno)
     # 根据教师号查询教师所教课程信息
@@ -261,34 +268,35 @@ def change(req):
 
 
 def entry(req):
-    template = loader.get_template('entry.html')
     # 接收当前教师姓名
     curTeacherName = req.session.get('curTeacherName')
     req.session['curTeacherName'] = curTeacherName
-    # 接收用户输入的课程号，未接收到
-    courseNo = req.POST.get('courseNo')
-    print(courseNo)
-    # 连接数据库
-    conn = func.connect_db()
-    cur = conn.cursor()
-    curGrade = []
-    # 根据课程号查询选课学生
-    if courseNo != None:
-        curStudent = func.get_course_student(cur, courseNo)
-        for s in curStudent:
-            # 根据选课学生号查询学生成绩
-            curStudentNo = s[0]
-            curGrade.append(func.search_grade_from_id(
-                cur, curStudentNo, courseNo))
-    # 传递上下文
-    content = {
-        'curTeacherName': curTeacherName,
-        'curGrade': curGrade,
-    }
-    func.update_fail_ratio(cur)
-    # 关闭数据库连接
-    func.close_db_connection(conn)
-    return HttpResponse(template.render(content, req))
+    # 接收用户输入的课程号
+    courseNo = req.session.get('courseNo')
+    req.session['courseNo'] = courseNo
+    # 接收用户输入的学号
+    studentNo = req.session.get('studentNo')
+    req.session['studentNo'] = studentNo
+    # 接收用户输入的平时成绩、考勤成绩和期末成绩
+    usual = req.POST.get('usual')
+    attendance = req.POST.get('attendance')
+    final = req.POST.get('final')
+    print(usual, attendance, final)
+    # 计算新成绩
+    if usual != None and attendance != None and final != None:
+        newScore = str(int(usual) * 0.4 + int(attendance)
+                       * 0.1 + int(final) * 0.5)
+        # 连接数据库
+        conn = func.connect_db()
+        cur = conn.cursor()
+        curGrade = []
+        # 根据学号和课程号更新学生成绩
+        if studentNo != None and courseNo != None:
+            func.update_grade(cur, studentNo, courseNo, newScore)
+        # 关闭数据库连接
+        func.close_db_connection(conn)
+        return redirect('/teacher.html')
+    return render(req, 'entry.html')
 
 
 def password(req):

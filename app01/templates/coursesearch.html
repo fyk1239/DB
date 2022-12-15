@@ -253,22 +253,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for student in students %}
-                            <tr>
-                                <th>{{student.name}}</th>
-                                <th>{{student.id}}</th>
-                                <th>{{student.score}}</th>
-                                <th>{{student.grade}}</th>
-                                <th>{{student.isFail}}</th>
-                            </tr>
+                            {% for grade in curGrade %}
+                                {% for g in grade %}
+                                    <tr>
+                                        <th>{{g.0}}</th>
+                                        <th>{{g.1}}</th>
+                                        <th>{{g.2}}</th>
+                                        <th>{{g.3}}</th>
+                                        {% if g.3 == 'E' %}
+                                            <th>是</th>
+                                        {% else %}
+                                            <th>否</th>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
                             {% endfor %}
-                            <tr>
-                                <th>fjr</th>
-                                <th>2020141460100</th>
-                                <th>59</th>
-                                <th>E</th>
-                                <th>是</th>
-                            </tr>
                         </tbody>
                     </table>
                     <div style="margin-left: 50%;left: -34px;position: relative;margin-bottom: 20px;">
@@ -286,9 +285,7 @@
                                     name="studentNo">
                             </div>
                             <div class="change">
-                                <a href="/entry.html">
-                                    <button type="submit" class="btn btn-primary">修改成绩</button>
-                                </a>
+                                <button type="submit" class="btn btn-primary">修改成绩</button>
                             </div>
                         </form>
                     </div>
