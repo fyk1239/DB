@@ -110,9 +110,7 @@ def studentsearch(req):
         courseLevel = req.POST.get('courselevel')
         # 筛选对应的的课程信息
         if courseName != '':
-            for c in curCourse:
-                if courseName != c[0]:
-                    curCourse.remove(c)
+            curCourse 
         if courseNo != '':
             for c in curCourse:
                 if courseNo != c[1]:
@@ -229,8 +227,21 @@ def coursesearch(req):
 
 
 def send(req):
-    template = loader.get_template('send.html')
-    return HttpResponse(template.render(content, req))
+    curTno = req.session.get('curTno')
+    req.session['curTno'] = curTno
+    courseNo = req.session.get('courseNo')
+    # 连接数据库
+    conn = func.connect_db()
+    cur = conn.cursor()
+    # 接收用户输入的公告内容
+    AnnouncementContent = req.POST.get('AnnouncementContent')
+    # 发布公告内容
+    if AnnouncementContent != None:
+        func.publish_announcement(cur, courseNo, AnnouncementContent)
+        # 关闭数据库连接
+        func.close_db_connection(conn)
+        return redirect('/teacher.html')
+    return render(req, 'send.html')
 
 
 def show(req):
@@ -268,6 +279,7 @@ def change(req):
 
 
 def entry(req):
+    template = loader.get_template('entry.html')
     # 接收当前教师姓名
     curTeacherName = req.session.get('curTeacherName')
     req.session['curTeacherName'] = curTeacherName
@@ -282,6 +294,10 @@ def entry(req):
     attendance = req.POST.get('attendance')
     final = req.POST.get('final')
     print(usual, attendance, final)
+    # 传递上下文
+    content = {
+        'curTeacherName': curTeacherName
+    }
     # 计算新成绩
     if usual != None and attendance != None and final != None:
         newScore = str(int(usual) * 0.4 + int(attendance)
@@ -296,7 +312,7 @@ def entry(req):
         # 关闭数据库连接
         func.close_db_connection(conn)
         return redirect('/teacher.html')
-    return render(req, 'entry.html')
+    return HttpResponse(template.render(content, req))
 
 
 def password(req):

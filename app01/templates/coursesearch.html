@@ -54,6 +54,10 @@
             margin-left: 20px;
         }
 
+        .header .right p {
+            width: 110px;
+        }
+
         .body {
             margin-left: 180px;
             margin-right: 180px;
@@ -254,19 +258,19 @@
                         </thead>
                         <tbody>
                             {% for grade in curGrade %}
-                                {% for g in grade %}
-                                    <tr>
-                                        <th>{{g.0}}</th>
-                                        <th>{{g.1}}</th>
-                                        <th>{{g.2}}</th>
-                                        <th>{{g.3}}</th>
-                                        {% if g.3 == 'E' %}
-                                            <th>是</th>
-                                        {% else %}
-                                            <th>否</th>
-                                        {% endif %}
-                                    </tr>
-                                {% endfor %}
+                            {% for g in grade %}
+                            <tr>
+                                <th>{{g.0}}</th>
+                                <th>{{g.1}}</th>
+                                <th>{{g.2}}</th>
+                                <th>{{g.3}}</th>
+                                {% if g.3 == 'E' %}
+                                <th>是</th>
+                                {% else %}
+                                <th>否</th>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
                             {% endfor %}
                         </tbody>
                     </table>
