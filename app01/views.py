@@ -108,20 +108,32 @@ def studentsearch(req):
         courseNo = req.POST.get('coursenum')
         courseProperty = req.POST.get('courseattribute')
         courseLevel = req.POST.get('courselevel')
+        for c in curCourse:
+            print(c)
         # 筛选对应的的课程信息
         if courseName != '':
-            curCourse 
+            print(courseName)
+            for c in curCourse:
+                if courseName != c[0]:
+                    print(c)
+                    curCourse.remove(c)
         if courseNo != '':
+            print(courseNo)
             for c in curCourse:
                 if courseNo != c[1]:
+                    print(c)
                     curCourse.remove(c)
         if courseProperty != '':
+            print(courseProperty)
             for c in curCourse:
                 if courseProperty != c[3]:
+                    print(c)
                     curCourse.remove(c)
         if courseLevel != '':
+            print(courseLevel)
             for c in curCourse:
                 if courseLevel != c[5]:
+                    print(c)
                     curCourse.remove(c)
     # 根据输入的课程号查询课程信息，如课程名、学分、课程属性、课程分数、分数等级
     content = {
